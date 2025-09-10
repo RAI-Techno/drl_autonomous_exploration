@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>aslam</name>
+  <version>1.0.0</version>
+  <description>ROS package that performs active slam for autonomous exploration task using Rainbow DQN</description>
+
+  <maintainer email="moallabashar107@gmail.com"> Bashar Moalla </maintainer>
+
+
+  <author email="alinhasan33@gmail.com"> Ali Hasan </author>
+  <author email="moallabashar107@gmail.com"> Bashar Moalla </author>
+  <author email="yousefmahfoud44@gmail.com"> Yousef Mahfoud </author>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+</package>

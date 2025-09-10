@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This file was originally created by SolidWorks to URDF Exporter [ Stephen Brawner (brawner@gmail.com) ] and then modified.
+SolidWorks to URDF Exporter info:
+	Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+	For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+ 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lily_bot">
+	<xacro:include filename="$(find lily_bot)/urdf/inertial_macros.xacro"/>
+	<xacro:include filename="$(find lily_bot)/urdf/lily_bot.gazebo.xacro"/>
+	<xacro:include filename="$(find lily_bot)/urdf/d435i.gazebo_mod.xacro"/>  
+	<xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
+
+	<link name="base_link"/>
+
+	<joint name="base_1_joint" type="fixed">
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+		<parent link="base_link"/>
+		<child link="base_1"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="base_1">
+		<xacro:inertial_box mass="0.111" x="0.21" y="0.197" z="0.003">
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</xacro:inertial_box>
+		
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/base_1.STL"/>
+			</geometry>
+			<material name="plexi">
+				<color rgba="1 1 1 0.35"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/base_1.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="motor_holder_r_joint" type="fixed">
+		<origin xyz="-0.05061 -0.035448 -0.005" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="motor_holder_r"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="motor_holder_r">    
+		<xacro:inertial_box mass="0.022" x="0.0444" y="0.06" z="0.005">
+			<origin xyz="6.93889390390723E-17 -0.0121329889522493 0.00647663606748848" rpy="0 0 0"/>
+		</xacro:inertial_box>
+    
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/motor_holder_r.STL"/>
+			</geometry>
+			<material name="white">
+				<color rgba="1 1 1 1"/>
+			</material>
+		</visual>
+    
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/motor_holder_r.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="motor_holder_l_joint" type="fixed">
+		<origin xyz="-0.05061 0.035448 -0.005" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="motor_holder_l"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="motor_holder_l">  
+		<xacro:inertial_box mass="0.022" x="0.0444" y="0.06" z="0.005">
+			<origin xyz="6.93889390390723E-17 0.0121329889522493 0.00647663606748848" rpy="0 0 0"/>
+		</xacro:inertial_box>
+    
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/motor_holder_l.STL"/>
+			</geometry>
+			<material name="white">
+				<color rgba="1 1 1 1"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/motor_holder_l.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="motor_r_joint" type="fixed">
+		<origin xyz="-0.05071 -0.043515 0.0132" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="motor_r"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="motor_r">
+		<xacro:inertial_box mass="0.098" x="0.023" y="0.055" z="0.023">
+			<origin xyz="2.50978970939286E-09 0.00550422513063843 0.0001238400077236" rpy="0 0 0"/>
+		</xacro:inertial_box>
+    
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/motor_r.STL"/>
+			</geometry>
+			<material name="dark">
+				<color rgba="0.3 0.3 0.3 1.0"/>
+			</material>
+		</visual>
+    
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/motor_r.STL"/>
+			</geometry>
+		</collision>
+	</link>
+  
+	<joint name="motor_l_joint" type="fixed">
+		<origin xyz="-0.05071 0.043515 0.0132" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="motor_l"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="motor_l">
+		<xacro:inertial_box mass="0.098" x="0.023" y="0.055" z="0.023">
+			<origin xyz="2.50978970939286E-09 -0.00550422513063843 0.0001238400077236" rpy="0 0 0"/>
+		</xacro:inertial_box>
+    
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/motor_l.STL"/>
+			</geometry>
+			<material name="dark">
+				<color rgba="0.3 0.3 0.3 1.0"/>
+			</material>
+		</visual>
+    
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/motor_l.STL"/>
+			</geometry>
+		</collision>
+	</link>
+  
+	<joint name="wheel_r_joint" type="continuous">
+		<origin xyz="-0.05071 -0.09 0.0132" rpy="-1.57 0 0"/>
+		<parent link="base_1"/>
+		<child link="wheel_r"/>
+		<axis xyz="0 0 1"/>
+	</joint>
+
+	<link name="wheel_r">
+		<inertial>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<mass value="0.038"/>
+			<inertia ixx="0.0000157212" ixy="0" ixz="0" izz="0.0000257859" iyz="0" iyy="0.0000157212"/>
+		</inertial>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="1.57 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/wheel_r.STL"/>
+			</geometry>
+			<material name="wh">
+				<color rgba="0.8 0.8 0.9 1"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<cylinder length="0.027" radius="0.034"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="wheel_l_joint" type="continuous">
+		<origin xyz="-0.05071 0.09 0.0132" rpy="-1.57 0 0"/>
+		<parent link="base_1"/>
+		<child link="wheel_l"/>
+		<axis xyz="0 0 1"/>
+	</joint>
+
+	<link name="wheel_l">   
+		<inertial>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<mass value="0.038"/>
+			<inertia ixx="0.0000157212" ixy="0" ixz="0" izz="0.0000257859" iyz="0" iyy="0.0000157212"/>
+		</inertial>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="1.57 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/wheel_l.STL"/>
+			</geometry>
+			<material name="wh">
+				<color rgba="0.8 0.8 0.9 1"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<cylinder length="0.027" radius="0.034"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="battery_joint" type="fixed">
+		<origin xyz="0.010545 -0.0040148 0.0215" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="battery"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="battery">
+		<xacro:inertial_box mass="0.315" x="0.025" y="0.139" z="0.043">
+			<origin xyz="-0.0002046831009163 -8.32667268468867E-17 1.38777878078145E-17" rpy="0 0 0"/>
+		</xacro:inertial_box>
+    
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/battery.STL"/>
+			</geometry>
+				<material name="blue">
+					<color rgba="0.0 0.0 0.5 1.0"/>
+				</material>
+		</visual>
+    
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/battery.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="castor_joint" type="fixed">
+		<origin xyz="0.052 0 -0.01" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="castor"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="castor">    
+		<xacro:inertial_sphere mass="0.037" radius="0.01">
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</xacro:inertial_sphere>
+    
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/castor.STL"/>
+			</geometry>
+			<material name="wh">
+				<color rgba="0.8 0.8 0.9 1"/>
+			</material>
+		</visual>
+    
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<sphere radius="0.01"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="holder_b1_joint" type="fixed">
+		<origin xyz="-0.09666 -0.080015 0.0275" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="holder_b1"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="holder_b1">
+		<xacro:inertial_cylinder mass="0.0035" length="0.055" radius="0.002">
+			<origin xyz="1.38777878078145E-17 0 -1.38777878078145E-17" rpy="0 0 0"/>
+		</xacro:inertial_cylinder>
+    
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_b1.STL"/>
+			</geometry>
+			<material name="light_black">
+				<color rgba="0.4 0.4 0.4 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_b1.STL"/>
+			</geometry>
+		</collision>
+	</link>
+  
+	<joint name="holder_b2_joint" type="fixed">
+		<origin xyz="0.02934 -0.092015 0.0275" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="holder_b2"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="holder_b2">    
+		<xacro:inertial_cylinder mass="0.0035" length="0.055" radius="0.002">
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</xacro:inertial_cylinder>
+    
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_b2.STL"/>
+			</geometry>
+			<material name="light_black">
+				<color rgba="0.4 0.4 0.4 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_b2.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="holder_b3_joint" type="fixed">
+		<origin xyz="0.02934 0.091985 0.0275" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="holder_b3"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="holder_b3">   
+		<xacro:inertial_cylinder mass="0.0035" length="0.055" radius="0.002">
+			<origin xyz="3.46944695195361E-18 0 -1.38777878078145E-17" rpy="0 0 0"/>
+		</xacro:inertial_cylinder>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_b3.STL" />
+			</geometry>
+			<material name="light_black">
+				<color rgba="0.4 0.4 0.4 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_b3.STL"/>
+			</geometry>
+		</collision>
+	</link>
+  
+	<joint name="holder_b4_joint" type="fixed">
+		<origin xyz="-0.097226 0.080891 0.0275" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="holder_b4"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="holder_b4">
+		<xacro:inertial_cylinder mass="0.0035" length="0.055" radius="0.002">
+			<origin xyz="0.000566205837798428 -0.000905399473145246 -6.24500451351651E-16" rpy="0 0 0"/>
+		</xacro:inertial_cylinder>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_b4.STL"/>
+			</geometry>
+			<material name="light_black">
+				<color rgba="0.4 0.4 0.4 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_b4.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="camera_holder_joint" type="fixed">
+		<origin xyz="0.08734 -1.4832E-05 0.02" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="camera_holder"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="camera_holder">    
+		<xacro:inertial_cylinder mass="0.015" length="0.04" radius="0.0115">
+			<origin xyz="1.38777878078145E-17 1.38777878078145E-17 0" rpy="0 0 0"/>
+		</xacro:inertial_cylinder>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/camera_holder.STL"/>
+			</geometry>
+			<material name="light_black">
+				<color rgba="0.4 0.4 0.4 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/camera_holder.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="imu_joint" type="fixed">
+		<parent link="base_1"/>
+		<child link="imu_link"/>
+		<origin xyz="0.08719 0.0012629 0.0525" rpy="0 0 0"/>
+	</joint>
+
+	<link name="imu_link"/>
+
+	<xacro:sensor_d435i parent="base_link" use_nominal_extrinsics="true">
+		<origin xyz="0.08719 0.0012629 0.04" rpy="0 0 0"/>
+	</xacro:sensor_d435i>
+
+	<joint name="base_2_joint" type="fixed">
+		<origin xyz="-0.026764 -0.0041561 0.0565" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="base_2"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="base_2">  
+		<xacro:inertial_box mass="0.087" x="0.14" y="0.2" z="0.003">
+			<origin xyz="-2.46330733588707E-16 -5.55111512312578E-17 -3.10765302380389E-12" rpy="0 0 0"/>
+		</xacro:inertial_box>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/base_2.STL"/>
+			</geometry>
+			<material name="plexi">
+				<color rgba="1 1 1 0.35"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/base_2.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="jetson_nano_joint" type="fixed">
+		<origin xyz="0.026351 -0.043951 0.018395" rpy="0 0 0"/>
+		<parent link="base_2"/>
+		<child link="jetson_nano"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="jetson_nano">    
+		<xacro:inertial_box mass="0.25" x="0.08" y="0.1" z="0.023">
+			<origin xyz="-0.0163599291639564 0.000355081096120549 -0.00776385756070123" rpy="0 0 0"/>
+		</xacro:inertial_box>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/jetson_nano.STL"/>
+			</geometry>
+			<material name="light_green">
+				<color rgba="0.0 0.8 0.3 0.6"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/jetson_nano.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="ros_ex_joint" type="fixed">
+		<origin xyz="0.014559 0.061709 0.0031914" rpy="0 0 0"/>
+		<parent link="base_2"/>
+		<child link="ros_ex"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="ros_ex">
+		<xacro:inertial_box mass="0.12" x="0.055" y="0.085" z="0.005">
+			<origin xyz="0.0038508034079985 0.00138167300572725 0.00249260232162485" rpy="0 0 0"/>
+		</xacro:inertial_box>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/ros_ex.STL"/>
+			</geometry>
+			<material name="light_green">
+				<color rgba="0.0 0.8 0.3 0.6"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/ros_ex.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="holder_t1_joint" type="fixed">
+		<origin xyz="-0.051896 0.014171 0.029" rpy="0 0 0"/>
+		<parent link="base_2"/>
+		<child link="holder_t1"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="holder_t1">
+		<xacro:inertial_cylinder mass="0.0035" length="0.055" radius="0.002">
+			<origin xyz="0 -2.77555756156289E-17 0" rpy="0 0 0"/>
+		</xacro:inertial_cylinder>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_t1.STL"/>
+			</geometry>
+			<material name="light_black">
+				<color rgba="0.4 0.4 0.4 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_t1.STL"/>
+			</geometry>
+		</collision>
+	</link>
+  
+	<joint name="holder_t2_joint" type="fixed">
+		<origin xyz="0.056104 -0.055829 0.029" rpy="0 0 0"/>
+		<parent link="base_2"/>
+		<child link="holder_t2"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="holder_t2">    
+		<xacro:inertial_cylinder mass="0.0035" length="0.055" radius="0.002">
+			<origin xyz="3.46944695195361E-18 3.46944695195361E-18 0" rpy="0 0 0"/>
+		</xacro:inertial_cylinder>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_t2.STL"/>
+			</geometry>
+			<material name="light_black">
+				<color rgba="0.4 0.4 0.4 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_t2.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="holder_t3_joint" type="fixed">
+		<origin xyz="0.056104 0.064171 0.029" rpy="0 0 0"/>
+		<parent link="base_2"/>
+		<child link="holder_t3"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="holder_t3">
+		<xacro:inertial_cylinder mass="0.0035" length="0.055" radius="0.002">
+			<origin xyz="-5.58580959264532E-16 -8.32667268468867E-17 5.27355936696949E-16" rpy="0 0 0"/>
+		</xacro:inertial_cylinder>  
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_t3.STL"/>
+			</geometry>
+			<material name="light_black">
+				<color rgba="0.4 0.4 0.4 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/holder_t3.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="base_3_joint" type="fixed">
+		<origin xyz="-0.024653 0.00018959 0.1145" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="base_3"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="base_3">
+		<xacro:inertial_box mass="0.0615" x="0.13" y="0.14" z="0.003">
+			<origin xyz="-1.4883927423881E-15 3.7470027081099E-16 -3.10859671337482E-12" rpy="0 0 0"/>
+		</xacro:inertial_box>
+
+ 		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/base_3.STL"/>
+			</geometry>
+			<material name="plexi">
+				<color rgba="1 1 1 0.35"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/base_3.STL"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="lidar_joint" type="fixed">
+		<origin xyz="-0.0016075 -1.6418E-05 0.0316" rpy="0 0 0"/>
+		<parent link="base_3"/>
+		<child link="lidar"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="lidar">  
+		<xacro:inertial_cylinder mass="0.19" length="0.055" radius="0.04">
+			<origin xyz="-0.00231579721890554 -0.000532796667563201 -0.00536496393965599" rpy="0 0 0"/>
+		</xacro:inertial_cylinder>  
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<mesh filename="package://lily_bot/meshes/lidar.STL"/>
+			</geometry>
+			<material name="light_black">
+				<color rgba="0.4 0.4 0.4 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<!--mesh filename="package://lily_bot/meshes/lidar.STL"/-->
+				<cylinder radius="0.04" length="0.055"/>
+			</geometry>
+		</collision>
+	</link>
+  
+	<!-- Collision Links for RL Model Training -->  
+	<joint name="collision_front_joint" type="fixed">
+		<origin xyz="0.26 0 0.06" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="collision_front"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="collision_front">
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.003 0.26 0.12"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="collision_back_joint" type="fixed">
+		<origin xyz="-0.12 0 0.06" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="collision_back"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="collision_back">
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.003 0.26 0.12"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="collision_right_joint" type="fixed">
+		<origin xyz="0.07 -0.13 0.06" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="collision_right"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="collision_right">
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.37 0.003 0.12"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="collision_left_joint" type="fixed">
+		<origin xyz="0.07 0.13 0.06" rpy="0 0 0"/>
+		<parent link="base_1"/>
+		<child link="collision_left"/>
+		<axis xyz="0 0 0"/>
+	</joint>
+
+	<link name="collision_left">
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.37 0.003 0.12"/>
+			</geometry>
+		</collision>
+	</link>
+</robot>

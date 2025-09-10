@@ -1,0 +1,229 @@
+<?xml version="1.0" ?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<xacro:property name="deg_to_rad" value="0.01745329251994329577" />
+
+	<gazebo reference="base_1">
+		<material>Gazebo/GreyTransparent</material>
+	</gazebo>
+
+	<gazebo reference="base_2">
+		<material>Gazebo/GreyTransparent</material>
+	</gazebo>
+
+	<gazebo reference="base_3">
+		<material>Gazebo/GreyTransparent</material>
+	</gazebo>
+
+	<gazebo reference="battery">
+		<material>Gazebo/Blue</material>
+	</gazebo>
+
+	<gazebo reference="jetson_nano">
+		<material>Gazebo/Green</material>
+	</gazebo>
+
+	<gazebo reference="ros_ex">
+		<material>Gazebo/Green</material>
+	</gazebo>
+
+	<gazebo reference="wheel_l">
+		<material>Gazebo/DarkGrey</material>
+		<mu1>0.8</mu1>
+		<mu2>0.8</mu2>
+		<kp>500000.0</kp>
+		<kd>10.0</kd>
+		<minDepth>0.001</minDepth>
+		<maxVel>0.1</maxVel>
+		<fdir1>1 0 0</fdir1>
+	</gazebo>
+
+	<gazebo reference="wheel_r">
+		<material>Gazebo/DarkGrey</material>
+		<mu1>0.8</mu1>
+		<mu2>0.8</mu2>
+		<kp>500000.0</kp>
+		<kd>10.0</kd>
+		<minDepth>0.001</minDepth>
+		<maxVel>0.1</maxVel>
+		<fdir1>1 0 0</fdir1>
+	</gazebo>
+
+	<gazebo reference="castor">
+		<material>Gazebo/FlatBlack</material>
+		<mu1>0.01</mu1>
+		<mu2>0.01</mu2>
+		<kp>1000000.0</kp>
+		<kd>100.0</kd>
+		<minDepth>0.001</minDepth>
+		<maxVel>0.1</maxVel>
+	</gazebo>
+
+	<gazebo>
+		<plugin name="lily_bot_controller" filename="libgazebo_ros_diff_drive.so">
+			<commandTopic>cmd_vel</commandTopic>
+			<odometryTopic>odom</odometryTopic>
+			<odometryFrame>odom</odometryFrame>
+			<publishOdomTF>true</publishOdomTF>
+			<robotBaseFrame>base_link</robotBaseFrame>
+			<publishWheelTF>false</publishWheelTF>
+			<publishTf>true</publishTf>
+			<publishWheelJointState>true</publishWheelJointState>
+			<legacyMode>true</legacyMode>
+			<updateRate>90.0</updateRate>
+			<leftJoint>wheel_l_joint</leftJoint>
+			<rightJoint>wheel_r_joint</rightJoint>
+			<wheelSeparation>0.18</wheelSeparation>
+			<wheelDiameter>0.068</wheelDiameter>
+			<wheelAcceleration>10.0</wheelAcceleration>
+			<wheelTorque>10.0</wheelTorque>
+			<!-- Odometry source, 0 for ENCODER, 1 for WORLD, defaults to WORLD -->
+			<odometrySource>world</odometrySource>
+			<odom_noise>
+				<x>0.005</x>           <!-- meters -->
+				<y>0.005</y>           <!-- meters -->
+				<yaw>0.02</yaw>       <!-- radians -->
+				<x_dot>0.01</x_dot>   <!-- m/s -->
+				<y_dot>0.01</y_dot>
+				<yaw_dot>0.025</yaw_dot>
+			</odom_noise>
+			<rosDebugLevel>na</rosDebugLevel>
+		</plugin>
+	</gazebo>
+
+	<gazebo reference="lidar">
+		<material>Gazebo/Grey</material>
+		<sensor type="ray" name="lds_lfcd_sensor">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>0</visualize>
+			<update_rate>8.6</update_rate>
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>580</samples>
+						<resolution>1</resolution>
+						<min_angle>-3.14159</min_angle>
+						<max_angle>3.14159</max_angle>
+					</horizontal>
+				</scan>
+				<range>
+					<min>0.10</min>
+					<max>12.0</max>
+					<resolution>0.01</resolution>
+				</range>
+				<noise>
+					<type>gaussian</type>
+					<mean>0.0</mean>
+					<stddev>0.02</stddev>
+				</noise>
+			</ray>
+			<plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+				<topicName>scan</topicName>
+				<frameName>lidar</frameName>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<gazebo reference="imu_link">
+		<sensor type="imu" name="imu">
+			<always_on>true</always_on>
+			<visualize>1</visualize>
+		</sensor>
+	</gazebo>
+
+	<gazebo>
+		<plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+			<alwaysOn>true</alwaysOn>
+			<bodyName>imu_link</bodyName>
+			<frameName>imu_link</frameName>
+			<topicName>imu</topicName>
+			<serviceName>imu_service</serviceName>
+			<gaussianNoise>0.0</gaussianNoise>
+			<updateRate>90.0</updateRate>
+			<imu>
+				<noise>
+					<type>gaussian</type>
+					<rate>
+						<mean>0.0</mean>
+						<stddev>2e-4</stddev>
+						<bias_mean>0.0000075</bias_mean>
+						<bias_stddev>0.0000008</bias_stddev>
+					</rate>
+					<accel>
+						<mean>0.0</mean>
+						<stddev>1.7e-2</stddev>
+						<bias_mean>0.1</bias_mean>
+						<bias_stddev>0.001</bias_stddev>
+					</accel>
+				</noise>
+			</imu>
+		</plugin>
+	</gazebo>
+
+  <!-- Collision for RL Model Training -->
+  <!-- to find out what the names of collision,do the following:-->
+  <!-- rosrun xacro xacro -inorder $(find lily_bot)/urdf/lily_bot.urdf.xacro > test.urdf -->
+  <!-- gz sdf -p test.urdf > test.sdf -->
+
+	<gazebo reference="collision_front">
+		<sensor name="collision_front_sensor" type="contact">
+			<always_on>true</always_on>
+			<contact>
+				<collision>base_link_fixed_joint_lump__collision_front_collision_13</collision>
+			</contact>
+			<plugin name="front_bumper_controller" filename="libgazebo_ros_bumper.so">
+				<alwaysOn>true</alwaysOn>
+				<updateRate>90.0</updateRate>
+				<bumperTopicName>bumper_front</bumperTopicName>
+				<frameName>collision_front</frameName>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<gazebo reference="collision_back">
+		<sensor name="collision_back_sensor" type="contact">
+			<always_on>true</always_on>
+			<contact>
+				<collision>base_link_fixed_joint_lump__collision_back_collision_12</collision>
+			</contact>
+			<plugin name="back_bumper_controller" filename="libgazebo_ros_bumper.so">
+				<alwaysOn>true</alwaysOn>
+				<updateRate>90.0</updateRate>
+				<bumperTopicName>bumper_back</bumperTopicName>
+				<frameName>collision_back</frameName>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<gazebo reference="collision_right">
+		<sensor name="collision_right_sensor" type="contact">
+			<always_on>true</always_on>
+			<contact>
+				<collision>base_link_fixed_joint_lump__collision_right_collision_15</collision>
+			</contact>
+			<plugin name="right_bumper_controller" filename="libgazebo_ros_bumper.so">
+				<alwaysOn>true</alwaysOn>
+				<updateRate>90.0</updateRate>
+				<bumperTopicName>bumper_right</bumperTopicName>
+				<frameName>collision_right</frameName>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<gazebo reference="collision_left">
+		<sensor name="collision_left_sensor" type="contact">
+			<always_on>true</always_on>
+			<contact>
+				<collision>base_link_fixed_joint_lump__collision_left_collision_14</collision>
+			</contact>
+			<plugin name="left_bumper_controller" filename="libgazebo_ros_bumper.so">
+				<alwaysOn>true</alwaysOn>
+				<updateRate>90.0</updateRate>
+				<bumperTopicName>bumper_left</bumperTopicName>
+				<frameName>collision_left</frameName>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+</robot>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Load parameters -->
+    <rosparam command="load" file="$(find aslam)/config/task.yaml" />
+    <rosparam command="load" file="$(find aslam)/config/RL.yaml" />
+    
+    <!-- Launch training script -->
+    <node pkg="aslam" name="training" type="train_model.py" output="screen"/>
+</launch>

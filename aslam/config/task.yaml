@@ -1,0 +1,15 @@
+robot_name: "lily_bot"      # Name of the robot in the Gazebo simulation
+gym_env: "LilyBotWorld-v0"  # Name of open-AI gym environment
+
+n_actions: 3                # Number of discrete actions in the action space
+history_length: 3           # Number of consecutive observations forming a state
+controller_freq: 5          # Number of performed actions per second
+
+OG_pad: 320                 # Padding size used when extracting the local occupancy grid
+local_OG_width: 160         # Width (in cells) of the local occupancy grid
+
+map_area_threshold: 0.9     # Fraction of the total area that must be explored to consider the task complete
+total_map_area: 89.449      # Total known environment area (depends on the Gazebo world)
+
+speeds: [[0.26, -0.785], [0.26, 0.785], [0.4, 0]]  # List of (linear velocity, angular velocity) pairs defining the action space
+init_poses: [[2.5, -1], [2.5, 1], [-2.5, -1], [-2.5, 1], [0, -4], [4, 4], [-4, 4]]  # Set of collision-free initial robot poses (defined per environment)

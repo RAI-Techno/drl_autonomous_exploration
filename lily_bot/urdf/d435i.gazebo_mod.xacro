@@ -1,0 +1,240 @@
+<?xml version="1.0" ?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!--
+Aknolegment: This file was originally copied from the realsense repository of
+pal-robotics-forks( https://github.com/pal-robotics-forks/realsense/ )
+and then modified.
+
+License: Apache 2.0. See LICENSE file in root directory.
+Copyright(c) 2017 PAL Robotics, S.L. All Rights Reserved
+
+This is the Gazebo URDF model for the Intel RealSense D435i camera
+-->
+
+  <xacro:property name="reference_link" value="camera_link" />
+  <xacro:property name="camera_name" value="d435i_camera" />
+  <xacro:property name="topics_ns" value="camera" />
+
+  <xacro:property name="depth_optical_frame" value="camera_depth_optical_frame" />
+  <xacro:property name="color_optical_frame" value="camera_color_optical_frame" />
+  <xacro:property name="infrared1_optical_frame" value="camera_infra1_optical_frame" />
+  <xacro:property name="infrared2_optical_frame" value="camera_infra2_optical_frame" />
+  
+  <xacro:property name="visualize" value="false" />
+  <xacro:property name="align_depth" value="true" />
+  <xacro:property name="enable_pointCloud" value="false" />
+ 
+  <xacro:property name="unite_imu_method" value="false" />
+  <xacro:property name="accel_fps" value="250" />
+  <xacro:property name="gyro_fps" value="400" />
+ 
+  <xacro:property name="clip_distance" value="2.5" />
+  <xacro:property name="depth_width" value="1280" />
+  <xacro:property name="depth_height" value="720" />  
+  <xacro:property name="depth_fps" value="30" />
+ 
+  <xacro:property name="infra_width" value="640" />
+  <xacro:property name="infra_height" value="480" />
+  <xacro:property name="infra_fps" value="30" />
+
+  <xacro:property name="color_width" value="1280" />
+  <xacro:property name="color_height" value="720" /> 
+  <xacro:property name="color_fps" value="30" />  
+
+    <!-- Load parameters to model's main link-->
+    <xacro:property name="deg_to_rad" value="0.01745329251994329577"/>
+    
+    <gazebo reference="${reference_link}">
+      <self_collide>0</self_collide>
+      <enable_wind>0</enable_wind>
+      <kinematic>0</kinematic>
+      <!-- <gravity>1</gravity> -->
+      <!--<mu>1</mu>-->
+      <mu2>1</mu2>
+      <fdir1>0 0 0</fdir1>
+      <!--<slip1>0</slip1>
+      <slip2>0</slip2>-->
+      <kp>1e+13</kp>
+      <kd>1</kd>
+      <!--<max_vel>0.01</max_vel>
+      <min_depth>0</min_depth>-->
+      <sensor name="${camera_name}color" type="camera">
+        <camera name="${camera_name}">
+          <horizontal_fov>${69.4*deg_to_rad}</horizontal_fov>
+          <image>
+            <width>${color_width}</width>
+            <height>${color_height}</height>
+            <format>RGB_INT8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>2.5</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>${color_fps}</update_rate>
+        <visualize>${visualize}</visualize>
+       
+
+      <plugin name="color_camera_plugin" filename="libgazebo_ros_camera.so">
+        <baseline>0.05</baseline>
+        <alwaysOn>true</alwaysOn>
+        <!-- Keep this zero, update_rate in the parent <sensor> tag will control the frame rate -->
+        <updateRate>${color_fps}</updateRate>
+        <cameraName>color_${camera_name}</cameraName>
+        <imageTopicName>/color_camera/color/image_raw</imageTopicName>
+        <cameraInfoTopicName>/color_camera/color/camera_info</cameraInfoTopicName>
+        <frameName>${color_optical_frame}</frameName>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+        <CxPrime>0</CxPrime>
+        <Cx>0</Cx>
+        <Cy>0</Cy>
+        <focalLength>0</focalLength>
+        <hackBaseline>0.05</hackBaseline>
+      </plugin> 
+        
+      </sensor>
+      <sensor name="${camera_name}ired1" type="camera">
+        <camera name="${camera_name}">
+          <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
+          <image>
+            <width>${infra_width}</width>
+            <height>${infra_height}</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>2.5</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.05</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>${infra_fps}</update_rate>
+        <visualize>false</visualize>
+      </sensor>
+      <sensor name="${camera_name}ired2" type="camera">
+        <camera name="${camera_name}">
+          <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
+          <image>
+            <width>${infra_width}</width>
+            <height>${infra_height}</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>2.5</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.05</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>${infra_fps}</update_rate>
+        <visualize>false</visualize>
+      </sensor>
+      <sensor name="${camera_name}depth" type="depth">
+        <camera name="${camera_name}">
+          <!-- align-depth settings -->
+          <xacro:unless value="${align_depth}">
+            <horizontal_fov>${85.2*deg_to_rad}</horizontal_fov>
+            <image>
+              <width>${depth_width}</width>
+              <height>${depth_height}</height>
+            </image>
+          </xacro:unless>
+          <xacro:if value="${align_depth}">
+            <horizontal_fov>${69.4*deg_to_rad}</horizontal_fov>
+            <image>
+              <width>${color_width}</width>
+              <height>${color_height}</height>
+            </image>
+          </xacro:if>
+          <clip>
+            <near>0.01</near>
+            <xacro:unless value="${clip_distance > 0.0}">
+              <far>2.5</far>
+            </xacro:unless>
+            <xacro:if value="${clip_distance > 0.0}">
+              <far>${clip_distance}</far>
+            </xacro:if>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.100</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <xacro:unless value="${align_depth}">
+          <update_rate>${depth_fps}</update_rate>
+        </xacro:unless>
+        <xacro:if value="${align_depth}">
+          <update_rate>${color_fps}</update_rate>
+        </xacro:if>
+        <visualize>false</visualize>
+        
+      <plugin name="depth_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
+        <baseline>0.05</baseline>
+        <alwaysOn>true</alwaysOn>
+        <!-- Keep this zero, update_rate in the parent <sensor> tag will control the frame rate -->
+        <updateRate>${color_fps}</updateRate>
+        <cameraName>depth_${camera_name}</cameraName>
+        <imageTopicName>/depth_camera/color/image_raw</imageTopicName>
+        <cameraInfoTopicName>/depth_camera/color/camera_info</cameraInfoTopicName>
+        <depthImageTopicName>/depth_camera/depth/image_raw</depthImageTopicName>
+        <depthImageCameraInfoTopicName>/depth_camera/depth/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudTopicName>/depth_camera/depth/points</pointCloudTopicName>
+        <frameName>${depth_optical_frame}</frameName>
+        <pointCloudCutoff>0.01</pointCloudCutoff>
+        <pointCloudCutoffMax>2.5</pointCloudCutoffMax>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+        <CxPrime>0</CxPrime>
+        <Cx>0</Cx>
+        <Cy>0</Cy>
+        <focalLength>0</focalLength>
+        <hackBaseline>0.05</hackBaseline>
+      </plugin> 
+        
+      </sensor>
+      <!-- IMU -->
+      <xacro:if value="${unite_imu_method == 'copy' or unite_imu_method == 'linear_interpolation'}">
+        <sensor name="${camera_name}imu" type="imu">
+          <always_on>true</always_on>
+          <update_rate>${gyro_fps}</update_rate>
+          <topic>${camera_name}/imu/sample</topic>
+          <plugin name="${camera_name}imu" filename="libgazebo_ros_imu_sensor.so">
+            <topicName>${camera_name}/imu/sample</topicName>
+            <bodyName>${camera_name}_link</bodyName>
+            <frameName>${gyro_optical_frame}</frameName>
+            <updateRateHZ>${gyro_fps}</updateRateHZ>
+            <gaussianNoise>0.1</gaussianNoise>
+            <xyzOffset>0 0 0</xyzOffset>
+            <rpyOffset>0 0 0</rpyOffset>
+          </plugin>
+        </sensor>
+      </xacro:if>
+      
+    </gazebo>
+
+</robot>

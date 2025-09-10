@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="x_pos" default="1.0"/>
+	<arg name="y_pos" default="1.0"/>
+	<arg name="z_pos" default="0.0"/>
+
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="world_name" value="$(find lily_bot)/worlds/Env2.world"/>
+		<arg name="verbose" default="false"/>
+		<arg name="paused" value="false"/>
+		<arg name="use_sim_time" value="true"/>
+		<arg name="gui" value="false"/>
+		<arg name="headless" value="false"/>
+		<arg name="debug" value="false"/>
+	</include>
+
+	<param name="robot_description" command="$(find xacro)/xacro $(find lily_bot)/urdf/lily_bot.urdf.xacro" />
+
+	<node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher" output = "log">
+		<param name="publish_frequency" type="double" value="30.0"/>
+	</node>
+
+	<node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf"  args="-urdf -model lily_bot -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description"/>
+
+
+  <include file="$(find lily_bot)/launch/rtabmap.launch">
+    <arg name="subscribe_rgbd" value="false"/>
+    <arg name="output"  value="log"/>
+    <arg name="rgbd_topic" value="/rgbd_image"/>    
+    <arg name="subscribe_rgb" value="true"/>
+    <arg name="depth" value="true"/>
+    <arg name="stereo" value="false"/>
+    <arg name="subscribe_scan_cloud" value="false"/>
+    <arg name="scan_cloud_topic" value="/depth_camera/depth/color/points"/>
+    <arg name="visual_odometry" value="false"/> 
+    <arg name="icp_odometry" value="true"/>
+    <arg name="rtabmap_viz" value="false"/>
+    <arg name="rviz" value="true"/>
+    <arg name="rviz_cfg" value="$(find lily_bot)/rviz/aslam.rviz"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="frame_id" value="base_link"/>
+    <arg name="map_frame_id" value="map"/>
+    <arg name="args" value="--delete_db_on_start"/>
+    <arg name="approx_sync" value="true"/>
+    <!--arg name="approx_sync_max_interval" value="0.04"/-->
+    <arg name="sync_queue_size" value="15"/>
+    <arg name="rgb_topic" value="/color_camera/color/image_raw"/>
+    <arg name="depth_topic" value="/depth_camera/depth/image_raw"/>
+    <arg name="camera_info_topic" value="/color_camera/color/camera_info"/>
+    <arg name="depth_camera_info_topic" value="/depth_camera/color/camera_info"/>
+    <arg name="subscribe_scan" value="true"/>
+    <arg name="scan_topic" value="/scan"/>
+    <arg name="odom_topic" value="rtab_odom"/>
+    <arg name="odom_sensor_sync" value="true"/>
+    <arg name="imu_topic" value="/imu"/>
+    <arg name="odom_guess_frame_id"  value="odom"/>
+    <param name="latch"  value="false"/>
+
+  </include>
+  
+  <rosparam command="load" file="$(find aslam)/config/rtabmap.yaml"/>
+
+</launch>
+  

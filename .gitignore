@@ -1,0 +1,14 @@
+# ROS build folders
+/build/
+/devel/
+/install/
+/log/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Temporary files
+*.tmp
+*.log
+*.bak

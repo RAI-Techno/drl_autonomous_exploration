@@ -1,0 +1,40 @@
+# RTAB-Map configuration
+rtabmap:
+    rtabmap:
+        Grid:
+            3D: true
+            MaxObstacleHeight: 0.21
+            MinObstacleHeight: 0.01
+            MaxGroundHeight:  0.01
+            MinGroundHeight: -0.02
+            NormalsSegmentation: false
+            RangeMax: 3.0
+            RangeMin: 0.0
+            RayTracing: true
+            CellSize: 0.05
+            Sensor: 1
+            Scan2dUnknownSpaceFilled: false
+        GridGlobal:
+            FootprintRadius: 0.14
+            #MinSize: 35.0
+        Icp:
+            CCFilterOutFarthestPoints: false
+            #VoxelSize : 0.05
+        Mem:
+            DepthMaskFloorThr: 0.0
+        Odom:
+            FilteringStrategy: 0
+            Holonomic: false
+            GuessMotion: false
+            Strategy: 0
+        OdomORBSLAM:
+            Inertial: true
+        RGBD:
+            AngularUpdate: 0.04 #0.1
+            CreateOccupancyGrid: true
+            LinearUpdate: 0.02 #0.1
+            LocalBundleOnLoopClosure: false
+            MaxLoopClosureDistance: 0.04
+        Rtabmap:
+            ImagesAlreadyRectified: false
+            DetectionRate: 6
